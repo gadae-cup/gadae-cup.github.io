@@ -1,0 +1,597 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>가대 캠퍼스 컵 지도</title>
+<meta name="description" content="가톨릭대학교 성심교정 컵 반납함의 위치와 현재 상태를 한눈에 확인하세요.">
+<meta name="theme-color" content="#3a4f9b">
+<meta property="og:type" content="website">
+<meta property="og:title" content="가대 캠퍼스 컵 지도">
+<meta property="og:description" content="반납함 위치와 현재 상태를 한눈에 확인하세요.">
+<meta property="og:image" content="og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@700&family=Jua&family=Noto+Sans+KR:wght@900&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light;--bg:#f4f6fa;--card:#fff;--tx:#1e2433;--sub:#717a8e;--map:#e9edf4;--bd:#e3e8f0;--bl:#f7f9fc;--blt:#5b657b;--pri:#3a4f9b;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--tx);font-family:-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;padding:12px;max-width:760px;margin:0 auto}
+h1{font-size:18px;margin:4px 0 2px}p.s{margin:0 0 10px;color:var(--sub);font-size:13px}
+.row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+button{font:inherit;font-size:13px;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:16px;padding:6px 12px}
+button.on{background:var(--pri);color:#fff;border-color:var(--pri)}
+#loc{background:var(--pri);color:#fff;border-color:var(--pri);width:100%;border-radius:10px;padding:10px;margin-bottom:8px}
+#wrap{overflow:auto;height:52vh;border:1px solid var(--bd);border-radius:12px;background:var(--map)}
+#map{display:block;width:875px;height:auto}
+.b{fill:var(--bl);stroke:var(--bd)}.bt{fill:var(--blt);font-size:26px;text-anchor:middle}
+.pl{font-size:22px;font-weight:700;pointer-events:none;paint-order:stroke;stroke:var(--map);stroke-width:5px}
+#card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px;margin-top:8px;font-size:14px;line-height:1.5}
+#card h2{font-size:16px;margin:0 0 4px}.m{color:var(--sub);font-size:13px}
+.st button{margin-top:6px}
+[hidden]{display:none!important}
+#tabs{display:flex;gap:6px;margin-bottom:10px}#tabs button{flex:1;border-radius:10px}
+#strip{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;padding:4px 0 10px}
+.bd{flex:0 0 66px;text-align:center;cursor:pointer;border:2px solid transparent;border-radius:12px;padding:4px 2px;font-size:12px}
+.bd.on{border-color:var(--pri);background:var(--card)}
+.bd i{display:block;height:46px;border-radius:6px 6px 2px 2px;margin-bottom:4px}
+.bd small{display:block;color:var(--sub)}
+.bc{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px;margin-top:8px;font-size:14px}
+.tag{display:inline-block;font-size:12px;border:1px solid var(--bd);border-radius:10px;padding:2px 8px;margin:2px 4px 2px 0;background:var(--card)}
+.tip{font-size:13px;color:var(--sub);margin:8px 0 2px}
+h1{font-size:23px;color:var(--pri);letter-spacing:-.5px;margin:6px 0 4px}
+body{padding:14px 14px 28px}
+#tabs{background:var(--card);padding:4px;border-radius:14px;box-shadow:0 2px 10px rgba(58,79,155,.08)}
+#tabs button{border:0;background:transparent;border-radius:11px;padding:10px 0;font-weight:700}
+#tabs button.on{background:var(--pri);color:#fff}
+#loc{background:var(--pri);color:#fff;border:0;border-radius:14px;font-weight:700;padding:13px}
+#wrap{border-color:transparent;border-radius:16px;box-shadow:0 2px 12px rgba(58,79,155,.1)}
+#card,.bc{border-color:transparent;border-radius:16px;box-shadow:0 2px 10px rgba(58,79,155,.08)}
+#flt button{font-weight:600}
+.tag{background:#eef1fb;border:0;color:var(--pri);font-weight:600}
+h1{font-family:"Noto Sans KR","Apple SD Gothic Neo",sans-serif;font-weight:900}
+.bd{font-family:Jua,"Apple SD Gothic Neo",sans-serif;font-size:11px;white-space:nowrap;flex-basis:74px}
+.ic{display:inline-block;width:1.15em;height:1.15em;vertical-align:-.2em;margin-right:5px;flex:none}
+#tabs button .ic{margin-right:4px}
+.bd i{height:48px;display:flex;align-items:center;justify-content:center;color:var(--tx);font:700 32px/1 Fredoka,Jua,"Arial Rounded MT Bold",ui-rounded,sans-serif;font-style:normal;margin:2px 0 6px}
+.bd.on{box-shadow:0 2px 10px rgba(58,79,155,.18)}
+.lg{font-size:12px;color:var(--sub);margin-top:8px;line-height:1.6}
+.b{stroke-width:2}
+.fr{display:flex;gap:6px;margin-bottom:6px;align-items:center}
+.fr input,.fr select{font:inherit;font-size:14px;padding:9px 8px;border:1px solid var(--bd);border-radius:10px;background:var(--card);color:var(--tx);min-width:0;flex:1}
+.ti{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-top:1px solid var(--bd);font-size:13px}
+.ti button{padding:3px 10px;font-size:12px}
+#wrap{touch-action:pan-x pan-y}
+.pin{cursor:pointer;filter:drop-shadow(0 2px 3px rgba(20,30,60,.35))}
+.zb{position:absolute;right:10px;top:10px;z-index:5;display:flex;flex-direction:column;gap:6px}
+.zb button{width:38px;height:38px;border-radius:12px;padding:0;font-size:22px;line-height:1;box-shadow:0 2px 8px rgba(0,0,0,.18)}
+#sheet{position:fixed;inset:0;z-index:50;display:flex;align-items:flex-end;justify-content:center}
+#locd{position:fixed;inset:0;z-index:55;display:flex;align-items:flex-end;justify-content:center}#locd[hidden]{display:none}#lbk{position:absolute;inset:0;background:rgba(15,20,40,.45)}#lpn{position:relative;width:100%;max-width:760px;background:var(--card);border-radius:22px 22px 0 0;padding:20px 16px calc(16px + env(safe-area-inset-bottom,0px));box-shadow:0 -6px 24px rgba(0,0,0,.2)}#ltx{font-size:15px;line-height:1.6;word-break:keep-all}#lsb{margin-top:6px;word-break:keep-all}
+#sbk{position:absolute;inset:0;background:rgba(15,20,40,.45)}
+#spn{position:relative;width:100%;max-width:760px;background:var(--card);border-radius:22px 22px 0 0;padding:18px 16px calc(16px + env(safe-area-inset-bottom,0px));box-shadow:0 -6px 24px rgba(0,0,0,.2)}
+.so{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border:2px solid var(--bd);border-radius:14px;padding:12px 14px;margin-bottom:8px;font-size:15px;font-weight:700;background:var(--card);color:var(--tx)}
+.so .ic{width:1.6em;height:1.6em;margin:0}
+.so.on2{border-color:var(--pri);background:rgba(58,79,155,.08)}
+.sbt{display:flex;gap:8px;margin-top:6px}.sbt button{flex:1;padding:12px;border-radius:12px;font-size:15px}
+.sbt button:disabled{opacity:.4}
+#toast{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:#1e2433;color:#fff;padding:10px 16px;border-radius:20px;font-size:13px;z-index:60}
+body{padding-bottom:104px}
+#nav{position:fixed;left:0;right:0;bottom:0;z-index:40;display:flex;gap:6px;max-width:760px;margin:0 auto;background:var(--card);border-radius:22px 22px 0 0;padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px));box-shadow:0 -4px 18px rgba(58,79,155,.14)}
+#nav button{flex:1;border:0;background:transparent;border-radius:14px;padding:11px 0;color:var(--sub);font-size:26px;line-height:1;display:flex;justify-content:center}
+#nav button.on{color:var(--pri);background:rgba(58,79,155,.1)}
+#nav button{position:relative}
+.bdg{position:absolute;top:4px;left:calc(50% + 6px);min-width:17px;height:17px;border-radius:9px;background:#e5323b;color:#fff;font-size:11px;font-weight:800;line-height:17px;text-align:center;box-shadow:0 0 0 2px var(--card);animation:bdp 1.6s ease-in-out infinite}
+@keyframes bdp{50%{transform:scale(1.18)}}
+.dg{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:10px}
+.dgt{font-size:21px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;-webkit-tap-highlight-color:transparent}.dgt i{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:var(--sp);color:var(--sub);margin-right:10px;flex:none}
+.nh{display:flex;justify-content:space-between;align-items:center}
+.nrs{display:flex;gap:6px;margin:8px 0}.nrs button{flex:1;border:2px solid var(--bd);background:var(--card);color:var(--tx);border-radius:12px;padding:8px 4px;font:inherit;font-size:13px;font-weight:700}.nrs button.s{border-color:var(--pri);background:rgba(58,79,155,.1);color:var(--pri)}
+.nl{display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;text-align:left;border:0;border-top:1px solid var(--bd);border-radius:0;background:transparent;color:var(--tx);padding:11px 6px;font:inherit;font-size:14px}
+.nx{flex:none;width:32px;height:32px;border:0;border-radius:50%;background:var(--sp);color:var(--sub);display:inline-flex;align-items:center;justify-content:center;padding:0}
+.nb{display:block;width:100%;margin-top:10px;border:2px solid var(--bd);background:var(--card);color:var(--tx);border-radius:12px;padding:10px;font:inherit;font-size:14px;font-weight:700}
+.dg3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+button.dc{border:0;font:inherit;color:var(--tx);width:100%}
+.meet{display:block;width:100%;margin-top:14px;border-radius:16px;padding:16px 18px;font-size:18px;font-weight:800;animation:meetp 1.4s ease-out infinite}
+@keyframes meetp{0%{box-shadow:0 0 0 0 rgba(58,79,155,.55)}70%,100%{box-shadow:0 0 0 14px rgba(58,79,155,0)}}
+@media(prefers-reduced-motion:reduce){.meet{animation:none}}
+.dc{background:var(--sp);border-radius:14px;padding:10px 4px 8px;text-align:center}.dc .dn{font-size:13px;font-weight:700;margin-top:4px}.dc.lk .dn{color:var(--sub)}
+#rv{position:fixed;inset:0;z-index:300;background:rgba(20,26,56,.92);display:flex;align-items:center;justify-content:center;padding:20px;animation:rvi .4s}
+#rv.flash{animation:rvf .5s}
+@keyframes rvi{from{opacity:0}}
+@keyframes rvf{0%{background:#fff}100%{background:rgba(20,26,56,.92)}}
+.rvb{text-align:center;color:#fff}.rvb .m{color:#cfd6f5}
+.rvt{font-size:19px;font-weight:800;margin-bottom:18px;min-height:28px}
+.rvs{animation:rvs .5s ease-in-out infinite}
+.rvs.pop{animation:rvp .6s cubic-bezier(.2,1.6,.4,1)}
+@keyframes rvs{0%,100%{transform:translateX(0) rotate(0)}25%{transform:translateX(-7px) rotate(-5deg)}75%{transform:translateX(7px) rotate(5deg)}}
+@keyframes rvp{from{transform:scale(.2)}to{transform:scale(1)}}
+.rvn{font-size:20px;margin-top:6px}
+@media(prefers-reduced-motion:reduce){.rvs,.bdg{animation:none}}
+#nav button[hidden]{display:none}
+#nav .ic{display:block;width:1em;height:1em;margin:0;vertical-align:0}
+.b{stroke-linejoin:round}.gr{fill:#dfeedd}.gr2{fill:#d3ece9}.gd{fill:#dfe4ee}.rd{fill:#cfd6e4}
+.cbub{display:inline-block;background:var(--bg);border:2px solid var(--pri);border-radius:12px;padding:8px 14px;font-size:14px;font-weight:700;margin-bottom:6px}
+.cpx{display:block;margin:10px auto 4px;animation:bob 1.2s steps(1) infinite}
+@keyframes bob{0%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.cname{display:block;margin:6px auto;width:9em;text-align:center;font:inherit;font-size:20px;font-weight:700;border:0;border-bottom:2px dashed var(--bd);background:transparent;color:var(--tx);padding:4px}
+.cbar{height:16px;border:2px solid var(--pri);border-radius:4px;margin:8px auto;max-width:260px;padding:1px}
+.cbar i{display:block;height:100%;background:var(--pri)}
+.off{background:var(--bd);color:var(--sub);border-color:transparent;cursor:not-allowed}
+.dot{display:inline-block;width:22px;height:22px;border-radius:50%;border:2px solid var(--pri);margin-left:6px;vertical-align:middle}.dot.on{background:var(--pri)}
+.hd{display:flex;align-items:center;justify-content:space-between;gap:10px}.hd h1{margin-right:0}
+#help{flex:none;width:24px;height:24px;padding:0;margin:0;border:0;border-radius:50%;background:#dfe2ea;color:#6b7387;font:700 14px/24px -apple-system,"Apple SD Gothic Neo",sans-serif;text-align:center;cursor:pointer}
+#tour{position:fixed;inset:0;z-index:70}
+#tblk{position:absolute;inset:0}
+#tspot{position:fixed;border-radius:12px;box-shadow:0 0 0 9999px rgba(15,20,40,.55);pointer-events:none;transition:top .38s cubic-bezier(.4,0,.2,1),left .38s cubic-bezier(.4,0,.2,1),width .38s cubic-bezier(.4,0,.2,1),height .38s cubic-bezier(.4,0,.2,1)}
+#ttip{position:fixed;width:min(88vw,340px);box-sizing:border-box;background:#fff;border-radius:10px;padding:20px 18px 14px;box-shadow:0 8px 28px rgba(0,0,0,.28);transition:top .38s cubic-bezier(.4,0,.2,1),left .38s cubic-bezier(.4,0,.2,1)}
+#ttx{word-break:keep-all;margin:0 26px 14px 0;font-size:15px;line-height:1.6;color:var(--tx);transition:opacity .16s}
+@keyframes cyc{0%,24%{fill:#2e9e4f}33%,57%{fill:#f2a100}66%,90%{fill:#e53935}100%{fill:#2e9e4f}}
+.cyc{animation:cyc 4.5s ease-in-out infinite;fill:#2e9e4f}
+.zbi{display:inline-block;width:24px;height:24px;margin:0 2px;border-radius:7px;background:#fff;border:1px solid #d3d8e6;box-shadow:0 1px 4px rgba(0,0,0,.2);vertical-align:middle;position:relative;top:-1px}.zbi svg{display:block;width:100%;height:100%}
+#ttx .ic{margin-right:0;width:1.2em;height:1.2em;vertical-align:-.28em}
+#tcl{position:absolute;top:10px;right:10px;width:30px;height:30px;padding:0;border:0;background:none;color:#4a5165;display:flex;align-items:center;justify-content:center}
+#tft{display:flex;align-items:center;gap:8px}#tcn{flex:1;color:var(--sub);font-size:15px}
+#tft button{padding:10px 16px;border-radius:10px;font-size:15px;font-weight:700;border:0}
+#tpv{background:#eef0f5;color:var(--tx)}#tnx{background:var(--pri);color:#fff}
+</style></head><body>
+<div class="hd"><h1>가대 캠퍼스 컵 지도</h1><button id="help" type="button" aria-label="이용 방법">?</button></div>
+<div id="t1">
+<button id="loc"><span data-ic="pin"></span>내 주변 반납함 찾기</button>
+<div class="row" id="flt"></div>
+<div style="position:relative"><div class="zb"><button id="zi" aria-label="확대">+</button><button id="zo" aria-label="축소">−</button></div><div id="wrap"><svg id="map" viewBox="128 183 1459 1230"></svg></div></div>
+<div class="lg"><span data-ic="sq"></span>일반 · <span data-ic="star"></span>QR · <span data-ic="drop"></span>음료수거함 · <span data-ic="circ"></span>텀블러 세척기<br><span data-ic="ok"></span>여유 · <span data-ic="mid"></span>보통 · <span data-ic="full"></span>가득 참 · <span data-ic="none"></span>제보 없음</div>
+<div id="card"><span class="m">지도의 핀을 눌러 보세요.</span></div>
+</div>
+<div id="t2" hidden><div class="m" style="margin-bottom:4px">건물을 눌러 그 안의 반납함을 확인하세요</div><div id="strip"></div><div id="bdet"></div></div>
+<div id="t3" hidden><div class="bc"><b><span data-ic="cal"></span>내 시간표로 추천받기</b><div class="m" style="margin:4px 0 10px">수업 사이 이동 경로에서 가장 덜 돌아가는 반납함을 알려드려요. 입력한 내용은 이 기기에만 저장돼요.</div>
+<div class="fr"><select id="fd"><option>월</option><option>화</option><option>수</option><option>목</option><option>금</option><option>토</option></select><input type="time" id="fs" value="09:00"><span class="m">~</span><input type="time" id="fe" value="09:50"></div>
+<div class="fr"><input id="fr" placeholder="강의실 (예: N319)" autocapitalize="characters"><input id="fn" placeholder="과목명 (선택)"></div>
+<button id="tadd" class="on" onclick="addTT()" style="width:100%;border-radius:10px;padding:10px">수업 추가</button><div id="fmsg" class="m" style="color:#e53935;margin-top:6px"></div>
+<div id="tlist"></div><div id="tmsg" class="m" style="margin-top:6px"></div></div><div id="tres"></div></div>
+<div id="t4" hidden></div>
+<nav id="nav"><button class="on" onclick="tab(1)" aria-label="지도"><span data-ic="map"></span></button><button onclick="tab(2)" aria-label="건물"><span data-ic="bld"></span></button><button onclick="tab(3)" aria-label="시간표" hidden><span data-ic="cal"></span></button><button onclick="tab(4)" aria-label="캐릭터"><span data-ic="char"></span></button></nav>
+<div id="sheet" hidden><div id="sbk"></div><div id="spn"><div style="font-weight:700;font-size:17px">상태 제보하기</div><div class="m" id="ssub" style="margin:3px 0 12px"></div><div id="sopts"></div><div class="sbt"><button id="scx">취소</button><button id="sok" class="on" disabled>제보하기</button></div></div></div>
+<div id="locd" hidden><div id="lbk"></div><div id="lpn"><div id="ltx"></div><div class="m" id="lsb"></div><div class="sbt" style="margin-top:14px"><button id="lcx" type="button">닫기</button><button id="lre" type="button" class="on">다시 시도</button></div></div></div>
+<div id="tour" hidden><div id="tblk"></div><div id="tspot"></div><div id="ttip"><button id="tcl" aria-label="닫기"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button><div id="ttx"></div><div id="tft"><span id="tcn"></span><button id="tpv">이전</button><button id="tnx">다음</button></div></div></div>
+<div id="toast" hidden></div>
+<script>
+// ---- 픽토그램 (직접 그린 아이콘) ----
+const IP={
+char:'<path d="M7 8h10l-1.3 12H8.3z"/><path d="M6 8h12M8.5 4.5h7V8h-7z"/><path d="M10.2 13.2v.1M13.8 13.2v.1" stroke-width="2.8"/><path d="M10.5 16.2c.9.7 2.100.7 3 0"/>',
+map:'<path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/>',
+bld:'<rect x="5" y="3" width="14" height="18" rx="2.5"/><path d="M9 8h2M13 8h2M9 12h2M13 12h2M10 21v-4h4v4"/>',
+cal:'<rect x="3" y="5" width="18" height="16" rx="3.5"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+pin:'<path d="M12 21s-6-5.6-6-10a6 6 0 1112 0c0 4.4-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/>',
+cam:'<rect x="3" y="7" width="18" height="13" rx="3.5"/><circle cx="12" cy="13.5" r="3.3"/><path d="M8.5 7l1.4-2.5h4.2L15.5 7"/>',
+cup:'<path d="M7 8h10l-1.3 12H8.3z"/><path d="M6 8h12M8.5 4.5h7V8h-7z"/>',
+warn:'<path d="M12 4l9 16H3z"/><path d="M12 10v4M12 17.3v.1"/>',
+chk:'<circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16 9.5"/>',
+alt:'<circle cx="12" cy="12" r="9"/><path d="M8 12h8M13 9l3 3-3 3"/>'};
+function I(n){
+const F={sq:`<circle cx="12" cy="12" r="11" fill="${QC}" stroke="none"/><g transform="translate(12 12) scale(.6) translate(-12 -12)" stroke="#fff" stroke-width="2.6">${IC.G}</g>`,
+star:`<circle cx="12" cy="12" r="11" fill="${QC}" stroke="none"/><g transform="translate(12 12) scale(.6) translate(-12 -12)" stroke="#fff" stroke-width="2.6">${IC.Q}</g>`,
+tri:`<circle cx="12" cy="12" r="11" fill="${NAVY}" stroke="none"/><g transform="translate(12 12) scale(.6) translate(-12 -12)" stroke="#fff" stroke-width="2.6">${IC.D}</g>`,
+drop:`<circle cx="12" cy="12" r="11" fill="${NAVY}" stroke="none"/><g transform="translate(12 12) scale(.6) translate(-12 -12)" stroke="#fff" stroke-width="2.6">${IC.D}</g>`,
+circ:`<circle cx="12" cy="12" r="11" fill="${NAVY}" stroke="none"/><g transform="translate(12 12) scale(.6) translate(-12 -12)" stroke="#fff" stroke-width="2.6">${IC.W}</g>`,
+ok:'<circle cx="12" cy="12" r="7" fill="#2e9e4f" stroke="none"/>',mid:'<circle cx="12" cy="12" r="7" fill="#f2a100" stroke="none"/>',full:'<circle cx="12" cy="12" r="7" fill="#e53935" stroke="none"/>',none:'<circle cx="12" cy="12" r="7" fill="#8b93a7" stroke="none"/>'};
+return `<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">${F[n]||IP[n]||""}</svg>`}
+
+// 건물 (지도 좌표)
+const BLD=[["김수환관",60,940,290,150],["안드레아관",360,900,330,170],["니콜스관",400,820,300,90],["다솔관",440,560,230,140],["소피아바라관",700,640,420,140],["미카엘관",780,470,230,80],["중앙도서관",1040,450,250,100],["약학관",1150,310,150,120],["성심관",1440,300,110,100],["콘서트홀",1470,500,230,130]];
+// [id,종류,x,y,건물,위치설명]  종류: G일반 Q QR D음료수거함 W세척기
+const P=[
+["G1","G",385,1305,"김수환관","매머드 앞"],["G2","G",355,1228,"김수환관","1층 카페멘사 앞"],["G3","G",489,1281,"김수환관","1층"],
+["G4","G",359,1137,"김수환관","기숙사 입구 앞"],["G5","G",490,1105,"안드레아관","1층"],["G6","G",672,1037,"니콜스관","4층 하랑 앞"],
+["G7","G",708,1012,"니콜스관","1층 학생지원팀 앞"],["G8","G",650,815,"다솔관","출입구(2층) 앞"],["G9","G",813,858,"소피아바라관","1층 식당 앞"],
+["G10","G",846,891,"소피아바라관","2층 카페 맞은편"],["G11","G",1341,401,"성심관","2층(로비) 화장실 앞"],
+["G12","G",796,569,"미카엘관","1층 ATM기 옆"],["G13","G",1096,453,"약학관","1층 자판기 맞은편"],["G14","G",1379,720,"콘서트홀","로비"],
+["Q1","Q",287,1228,"김수환관","1층 카페멘사 안"],["Q2","Q",455,1313,"김수환관",""],["Q3","Q",483,1230,"김수환관","2층"],
+["Q4","Q",324,1128,"김수환관","기숙사 로비 안"],["Q5","Q",609,1035,"니콜스관","4층 하랑 앞"],["Q6","Q",901,888,"소피아바라관","2층 카페 맞은편"],
+["Q7","Q",850,571,"미카엘관","1층 ATM기 옆"],["Q8","Q",997,596,"중앙도서관","2층 휴게실 안"],["Q9","Q",1115,605,"중앙도서관","2층 미디어실 옆"],
+["음료수거함","D",374,1226,"김수환관","1층 카페멘사 앞"],["음료수거함","D",641,1036,"니콜스관","4층"],["음료수거함","D",791,855,"소피아바라관","1층 · 일반반납함 옆"],["음료수거함","D",872,894,"소피아바라관","2층"],
+["텀블러 세척기","W",250,1229,"김수환관","1층 카페멘사 안"],["텀블러 세척기","W",997,597,"중앙도서관","QR반납함 맞은편"],["텀블러 세척기","W",1115,606,"중앙도서관","2층 QR반납함 옆"]];
+const COL={G:"#e53935",Q:"#2f6fe0",D:"#2e9e4f",W:"#f2c200"};
+const NAME={G:"일반반납함",Q:"QR반납함",D:"음료수거함 (잔여 음료 비우는 곳)",W:"텀블러 세척기"};
+// GPS 보정용: 지도 모서리의 실제 위도/경도 (임시값 → 실제 좌표로 교체 필요)
+const MV={x:128,y:183,w:1459,h:1230};
+const GEO={latTop:37.487979,latBot:37.484006,lngL:126.794232,lngR:126.803522,x0:0,x1:1823,y0:250,y1:1230};
+let sel=null,filt="ALL",me=null,ST={},near=null,NR=100,meAcc=0,DEMO=false;
+let FBR={};const FB={on:false,uid:null,db:null},WIN=36e5;
+try{ST=JSON.parse(localStorage.getItem("cupst")||"{}")}catch(e){}
+const svg=document.getElementById("map"),NS="http://www.w3.org/2000/svg";
+function el(t,a,p){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);(p||svg).appendChild(e);return e}
+function star(x,y,r){let s="";for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,q=i%2?r*.45:r;s+=(x+q*Math.cos(a)).toFixed(1)+","+(y+q*Math.sin(a)).toFixed(1)+" "}return s}
+const SC={ok:"#2e9e4f",mid:"#f2a100",full:"#e53935"};
+const OUT={};
+const SL={ok:"여유",mid:"보통",full:"가득 참"},TTL={ok:1,mid:2,full:12},STX={ok:"#2e9e4f",mid:"#c98200",full:"#e53935"},stSp=v=>`<b style="color:${STX[v]}">${SL[v]}</b>`;
+const collCut=n=>{const c=new Date(n);c.setHours(10,30,0,0);if(n<c.getTime())c.setDate(c.getDate()-1);return c.getTime()};
+// 제보 모으기: 수거(10:30) 이후이고 유효시간 안인 제보만 쓰고, 최근 1시간 안 제보가 있으면 그중 다수 상태(동률이면 더 최근), 없으면 가장 최근 제보 하나
+const repsOf=id=>FB.on&&!DEMO?(FBR[id]||[]):(ST[id]?[ST[id]]:[]);
+function stEff(id){const n=Date.now(),cut=collCut(n),L=repsOf(id).filter(r=>r&&r.ts&&r.ts>=cut&&TTL[r.v]&&n-r.ts<=TTL[r.v]*36e5);if(!L.length)return null;
+const R=L.filter(r=>n-r.ts<=WIN),A=R.length?R:[L.reduce((a,b)=>b.ts>a.ts?b:a)],c={};
+A.forEach(r=>{const o=c[r.v]||(c[r.v]={k:0,ts:0});o.k++;o.ts=Math.max(o.ts,r.ts)});
+const b=Object.entries(c).sort((x,y)=>y[1].k-x[1].k||y[1].ts-x[1].ts)[0];return{v:b[0],ts:b[1].ts,n:A.length}}
+const ago=ts=>{const m=Math.max(0,Math.round((Date.now()-ts)/6e4));return m<1?"방금 전":m<60?m+"분 전":Math.floor(m/60)+"시간 전"};
+const inColl=()=>{const d=new Date(),x=d.getHours()*60+d.getMinutes();return x>=540&&x<630};
+// ---- 캠퍼스 배경 지도 (포스터 배치 기준 도형) ----
+const pg=p=>"M"+p.map(q=>q.join(" ")).join("L")+"Z",rc=(x,y,w,h)=>pg([[x,y],[x+w,y],[x+w,y+h],[x,y+h]]);
+const GREEN=[["gr", "M739 954L727 1097L729 1101L793 1150L811 1156L953 1159L975 1151L989 1136L998 1115L998 1094L994 1084L945 1000L932 987L919 979L897 974L749 950Z", "", 0, 0],["gr2", "M1250 777L1244 777L983 960L983 974L1067 1093L1076 1102L1089 1098L1342 919L1343 908L1258 785Z", "대운동장", 1254, 979],["gr", "", "하늘동산", 854, 1144]];
+const BLDG=[["김수환관", "M254 1124L220 1246L220 1255L257 1261L375 1270L380 1248L388 1136L384 1134ZM418 1201L415 1214L406 1323L417 1327L504 1333L507 1319L512 1234L485 1207Z", 519, 1353, 20],["니콜스관", "M510 879L507 890L504 960L520 963L525 966L525 987L476 983L473 987L469 1042L480 1045L646 1060L626 1272L629 1275L695 1280L698 1277L700 1240L686 1238L683 1233L685 1201L675 1197L674 1187L685 1068L688 1064L706 1065L708 1063L714 1008L711 1004L679 1002L674 998L674 991L678 987L690 987L693 983L698 891L694 888L656 886L652 889L648 983L657 985L662 989L661 997L654 1000L549 990L549 967L571 964L575 884L573 882ZM449 1123L447 1148L450 1160L465 1180L481 1188L510 1188L522 1184L534 1173L547 1168L628 1168L631 1107L479 1097L462 1104Z", 521, 1044, 17],["안드레아관", "", 541, 1152, 17],["마리아관", "", 667, 1266, 15],["비르투스관", "", 541, 927, 14],["밤비노관", "M612 898L582 936L581 943L612 967L619 968L641 939L641 934L636 928L639 915L616 898Z", 614, 988, 14],["다솔관", "M550 666L528 686L519 801L544 826L659 837L675 675L670 673Z", 596, 761, 24],["소피아바라관", "M722 767L716 847L718 855L805 859L823 878L823 906L935 917L939 862L932 859L865 854L828 813L831 774L828 772L724 765Z", 770, 825, 19],["미카엘관", "M761 579L761 584L780 605L781 629L921 644L930 641L935 579L933 576L816 565L800 549L793 549Z", 849, 642, 17],["중앙도서관", "M986 551L976 653L978 656L1110 669L1124 669L1126 667L1135 581L1134 563L997 549Z", 1058, 664, 17],["약학관", "M1283 275L1167 263L1162 272L1159 309L1163 312L1174 314L1179 318L1180 324L1176 330L1082 323L1066 326L1053 509L1056 513L1153 518L1156 514L1160 439L1166 435L1282 446L1291 443L1295 425L1292 399L1279 367L1268 355L1250 343L1225 336L1207 333L1201 329L1201 322L1208 317L1269 323L1280 322L1284 318L1286 278Z", 1120, 396, 24],["성심관", "M1323 342L1320 344L1312 475L1317 479L1351 480L1354 471L1361 346L1351 343Z", 1355, 370, 15],["콘서트홀", "M1474 615L1386 608L1321 662L1321 668L1362 716L1362 722L1352 730L1352 735L1377 765L1387 761L1508 660L1505 651Z", 1412, 678, 19],["바오로관", "M418 738L415 747L409 810L416 813L440 814L444 794L448 791L462 790L464 769L449 765L449 741Z", 407, 823, 14],["국제교류관", "M448 640L443 724L480 725L484 642Z", 451, 660, 14],["예수성심성당", "M213 1012L207 1025L216 1032L216 1047L220 1056L235 1067L255 1067L260 1021L255 1016Z", 211, 1098, 14]];
+const GROUND="M1415 308L1307 213L1175 196L1148 198L411 583L381 618L143 1003L152 1245L165 1291L200 1318L396 1390L491 1399L541 1393L722 1342L1131 1151L1377 975L1408 939L1558 706L1573 671L1564 618Z",ROADS="M207 1320L295 1354L336 1361L337 1370L354 1375L356 1354L348 1344ZM143 1078L146 1101L217 1136L168 1295L184 1310L237 1130L230 1121ZM1572 679L1516 681L1498 688L1389 774L1378 779L1348 749L1330 740L1232 732L1250 629L1261 617L1373 544L1364 529L1253 601L1247 600L1251 550L1232 549L1229 600L1223 601L1152 539L960 512L960 530L1147 558L1229 631L1214 725L1147 778L976 758L969 755L921 676L920 652L902 651L902 681L941 743L943 752L856 744L843 735L816 697L782 679L746 590L755 560L762 552L796 537L957 562L959 544L790 519L750 538L734 562L728 563L727 418L708 427L707 606L695 623L679 625L536 554L535 549L557 508L527 524L517 542L499 537L480 548L649 631L648 637L544 632L526 639L510 652L499 678L485 827L493 846L518 861L769 890L785 902L816 939L828 946L938 967L1009 1089L1003 1131L977 1160L963 1168L895 1175L800 1176L701 1098L692 1112L783 1186L784 1191L727 1320L639 1365L710 1348L743 1331L804 1195L910 1192L969 1186L988 1176L1013 1152L1025 1115L1026 1084L959 967L959 946L970 932L1204 758L1221 750L1322 758L1335 763L1364 792L1384 798L1406 785L1507 704L1522 698L1563 697ZM1071 790L1113 792L1119 799L1079 825ZM708 661L751 661L767 690L780 702L805 713L828 747L846 760L1048 785L1063 840L959 916L945 933L939 947L837 930L820 916L794 883L778 873L694 862ZM535 656L566 651L690 660L672 860L515 840L506 832L504 812L518 678ZM727 604L733 605L743 642L708 640ZM1043 341L944 385L921 382L861 350L838 359L917 400L946 404L1048 358Z";
+const BASE=`<path class="gd" d="${GROUND}"/><path class="rd" fill-rule="evenodd" d="${ROADS}"/>`+GREEN.map(g=>`<path class="${g[0]}" d="${g[1]}"/>${g[2]?`<text class="bt" x="${g[3]}" y="${g[4]}" style="font-size:22px;opacity:.8">${g[2]}</text>`:""}`).join("")+BLDG.map(b=>(b[1]?`<path class="b" d="${b[1]}"/>`:"")+`<text class="bt" x="${b[2]}" y="${b[3]}" style="font-size:${b[4]||24}px">${b[0]}</text>`).join("");
+const NAVY="#3a4f9b",STC={ok:"#2e9e4f",mid:"#f2a100",full:"#e53935",none:"#8b93a7"};
+const IC={
+G:'<path d="M7 8h10l-1.3 12H8.3z"/><path d="M6 8h12M8.5 4.5h7V8h-7z"/>',
+Q:'<rect x="4.5" y="4.5" width="6" height="6" rx="1.3"/><rect x="13.5" y="4.5" width="6" height="6" rx="1.3"/><rect x="4.5" y="13.5" width="6" height="6" rx="1.3"/><path d="M14 14h2v2M19.5 14v.1M14 19.5h.1M17.5 17.5h2v2"/>',
+D:'<path d="M12 3.8c3.2 3.8 5.8 6.6 5.8 9.8a5.8 5.8 0 01-11.6 0c0-3.2 2.6-6 5.8-9.8z"/>',
+W:'<circle cx="8.5" cy="14.5" r="3.6"/><circle cx="16" cy="9" r="2.7"/><circle cx="16" cy="17.5" r="1.8"/>'};
+const ico=t=>`<g transform="translate(-13.5 -13.5) scale(1.12)" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">${IC[t]}</g>`;
+const stOf=p=>{if(OUT[p[0]])return "none";const s=stEff(p[0]);return s&&(p[1]==="G"||p[1]==="Q")?s.v:"none"};
+const DH={G2:1,G6:1,G10:1,Q1:1,Q5:1,Q6:1},WH={Q1:1,Q8:1,Q9:1};
+const dSw=`<span style="display:inline-flex;vertical-align:-3px;width:16px;height:16px;border-radius:50%;background:#3a4f9b;align-items:center;justify-content:center;margin-right:3px"><svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.8c3.2 3.8 5.8 6.6 5.8 9.8a5.8 5.8 0 01-11.6 0c0-3.2 2.6-6 5.8-9.8z"/></svg></span>`;
+const dIc=dSw.replace("margin-right:3px","margin-left:7px");
+const visK=i=>P[i][1]!=="D"&&(filt==="ALL"||(filt==="D"?!!DH[P[i][0]]:P[i][1]===filt));
+const bdg=p=>DH[p[0]]?`<g transform="translate(18 -18)"><circle r="11" fill="#3a4f9b" stroke="#fff" stroke-width="3"/><g transform="translate(-7 -7) scale(.58)" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">${IC.D}</g></g>`:"";
+const QC="#2f6fe0",PAIR={G2:"Q1",G6:"Q5",G10:"Q6",G12:"Q7",G4:"Q4"},QP=Object.fromEntries(Object.entries(PAIR).map(([g,q])=>[q,g]));
+const gFull=id=>{if(OUT[id])return false;const s=stEff(id);return !!s&&s.v==="full"};
+const qHi=p=>p[1]==="Q"&&!!QP[p[0]]&&gFull(QP[p[0]]);
+const qNote=id=>PAIR[id]&&gFull(id)?`<div style="margin-top:6px;font-weight:700;color:${QC}">근처 QR 반납함에는 반납할 수 있어요</div>`:QP[id]&&gFull(QP[id])?`<div style="margin-top:6px;font-weight:700;color:${QC}">가득 찬 일반 반납함 대신 이 반납함을 이용해 주세요</div>`:"";
+const pinSvg=p=>`${qHi(p)?`<circle r="35" fill="rgba(47,111,224,.22)" stroke="${QC}" stroke-width="5"/>`:""}<circle r="23" fill="${p[1]==="G"?STC[stOf(p)]:p[1]==="Q"?QC:NAVY}" stroke="#fff" stroke-width="4"/>${ico(p[1])}${bdg(p)}`;
+let PT=[];
+(function(){PT=P.map(p=>({x:p[2],y:p[3]}));for(let it=0;it<60;it++)for(let i=0;i<PT.length;i++)for(let j=i+1;j<PT.length;j++){if(P[i][1]==="D"||P[j][1]==="D")continue;let dx=PT[j].x-PT[i].x,dy=PT[j].y-PT[i].y,d=Math.hypot(dx,dy);if(d<54){if(d<1){dx=1;dy=0;d=1}const k=(54-d)/2/d;PT[i].x-=dx*k;PT[i].y-=dy*k;PT[j].x+=dx*k;PT[j].y+=dy*k}}})();
+const bn=b=>b==="중앙도서관"?"도서관":(LT[b]||b[0])+"관";
+function selMark(i){const p=P[i],q=PT[i],tx=bn(p[4])+" · "+(p[5]||p[0]),w=tx.length*25+44;
+return `<g class="pin" data-i="${i}" transform="translate(${q.x} ${q.y})" style="filter:drop-shadow(0 6px 8px rgba(20,30,60,.5))"><rect x="${-w/2}" y="-104" width="${w}" height="48" rx="24" fill="#fff"/><polygon points="-11,-56 11,-56 0,-42" fill="#fff"/><text x="0" y="-72" text-anchor="middle" font-size="24" font-weight="700" fill="#1e2433">${tx}</text><g transform="scale(1.45)">${pinSvg(p)}</g></g>`}
+function draw(){
+let h="";
+h+=BASE;
+const vis=visK,dim=sel!==null&&vis(sel);
+if(me&&near){const mpu=metersPerUnit();if(meAcc>25)h+=`<circle cx="${me.x}" cy="${me.y}" r="${Math.min(meAcc,400)/mpu}" fill="none" stroke="#00b0ff" stroke-width="3" stroke-dasharray="3 9" stroke-linecap="round" opacity=".6"/>`;
+h+=`<circle cx="${me.x}" cy="${me.y}" r="${NR/mpu}" fill="rgba(0,176,255,.13)" stroke="#00a2ec" stroke-width="5" stroke-dasharray="16 10"/>`}
+P.forEach((p,i)=>{if(!vis(i)||i===sel)return;const inn=near&&near.includes(i);h+=`<g class="pin" data-i="${i}" opacity="${near?(inn?1:.3):dim?.45:1}" transform="translate(${PT[i].x} ${PT[i].y})">${inn?'<circle r="34" fill="rgba(0,176,255,.25)" stroke="#00a2ec" stroke-width="5"/>':""}${pinSvg(p)}<circle r="34" fill="transparent"/></g>`});
+if(sel!==null&&vis(sel))h+=selMark(sel);
+if(me)h+=`<circle cx="${me.x}" cy="${me.y}" r="18" fill="#00b0ff" stroke="#fff" stroke-width="6"/>`;
+svg.innerHTML=h;
+svg.querySelectorAll(".pin").forEach(g=>g.onclick=()=>{const i=+g.dataset.i;if(sel===i)deselect();else pick(i,true)})}
+function deselect(){sel=null;draw();if(near)nearCard();else document.getElementById("card").innerHTML='<span class="m">지도의 핀을 눌러 보세요.</span>'}
+const SHORT={G:"일반",Q:"QR",D:"음료수거함",W:"세척기"};
+function inNear(){const r=NR/metersPerUnit();return P.map((p,i)=>i).filter(i=>visK(i)&&dist(me,{x:P[i][2],y:P[i][3]})<=r).sort((a,b)=>dist(me,{x:P[a][2],y:P[a][3]})-dist(me,{x:P[b][2],y:P[b][3]}))}
+function nearCard(){
+const c=document.getElementById("card"),mpu=metersPerUnit();
+const rows=near.map(i=>{const p=P[i],m=Math.round(dist(me,{x:p[2],y:p[3]})*mpu),nm=p[1]==="G"||p[1]==="Q"?p[4]+(p[5]?" · "+p[5]:""):p[0],stt=p[1]==="G"||p[1]==="Q"?(p[1]==="Q"&&!OUT[p[0]]?(qHi(p)?"<b style=\"color:"+QC+"\">이용 가능</b>":""):OUT[p[0]]?"사용 불가":stEff(p[0])?stSp(stEff(p[0]).v):"제보 없음"):"";
+return `<button class="nl" data-i="${i}"><span><b>${escH(nm)}</b>${DH[p[0]]?dIc:""}<span class="m"> ${SHORT[p[1]]}${stt?" · "+stt:""}</span></span><span class="m">${m}m</span></button>`}).join("");
+c.innerHTML=`<div class="nh"><h2 style="margin:0">내 주변 ${NR}m</h2><button class="nx" data-r="0" aria-label="닫기"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div><div class="nrs">${[50,100,200].map(r=>`<button class="${r===NR?"s":""}" data-r="${r}">${r}m</button>`).join("")}</div>${rows||'<div class="m" style="margin-top:8px">이 범위 안에는 반납함이 없어요.</div>'}${meAcc>40?`<div class="m" style="margin-top:8px">위치 정확도가 ±${Math.round(meAcc)}m예요. 실제 위치와 다를 수 있어요.</div>`:""}`;
+c.querySelectorAll(".nl").forEach(b=>b.onclick=()=>pick(+b.dataset.i,true));
+c.querySelectorAll("[data-r]").forEach(b=>b.onclick=()=>{const r=+b.dataset.r;if(!r){near=null;sel=null;draw();c.innerHTML='<span class="m">지도의 핀을 눌러 보세요.</span>';return}NR=r;near=inNear();sel=null;draw();nearCard()})}
+function dist(a,b){return Math.hypot(a.x-b.x,a.y-b.y)}
+function metersPerUnit(){const c=cc();return 1/Math.hypot(c.ar,c.ai)}
+function pick(i,center){
+sel=i;draw();const p=P[i],[id,k,x,y,b,n]=p,w=document.getElementById("wrap");
+if(center){const f=ZW/MV.w;w.scrollTo({left:(PT[i].x-MV.x)*f-w.clientWidth/2,top:(PT[i].y-MV.y)*f-w.clientHeight/2,behavior:"smooth"})}
+let h=k==="G"||k==="Q"?`<h2 style="display:flex;align-items:center;gap:8px"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#1c1f2b" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="flex:none">${k==="Q"?IC.Q:IC.G}</svg><span>${bn(b)+" · "+(n||id)}</span>${DH[id]?`<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="${NAVY}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex:none">${IC.D}</svg>`:""}</h2>`:`<h2>${id}</h2><div class="m">${b+(n?" · "+n:"")}</div>`;
+if(me){const m=Math.round(dist(me,{x,y})*metersPerUnit());h+=`<div class="m">내 위치에서 직선 약 ${m}m (도보 약 ${Math.max(1,Math.round(m/70))}분)</div>`}
+if(OUT[id]){h+=`<div style="margin-top:6px;font-weight:700;color:#e53935">${OUT[id]}</div>`}else if(k==="Q"){h+=qNote(id)}else if(k==="G"){
+h+=`<div class="m" style="margin-top:6px">${stTxt(id)}</div>${qNote(id)}
+<div class="st">${repBtn(id)}</div>${repMsg(id)}`;
+}
+document.getElementById("card").innerHTML=h;
+if(near){const c=document.getElementById("card"),b=document.createElement("button");b.className="nb";b.textContent="주변 목록으로";b.onclick=()=>{sel=null;draw();nearCard()};c.appendChild(b)}}
+const refreshAll=()=>{if(sel!==null)pick(sel,false);else draw();renderB()};
+function rep(id,v){if(FB.on){fbRep(id,v);return}const d=new Date();ST[id]={v,ts:d.getTime(),t:(d.getMonth()+1)+"/"+d.getDate()+" "+d.getHours()+":"+String(d.getMinutes()).padStart(2,"0")};
+if(!DEMO)try{localStorage.setItem("cupst",JSON.stringify(ST))}catch(e){}refreshAll()}
+// 필터
+[["ALL","전체"],["G","일반"],["Q","QR"],["W","세척기"],["D","음료수거함"]].forEach(([k,l])=>{
+const b=document.createElement("button");b.textContent=l;if(k==="ALL")b.className="on";
+b.onclick=()=>{filt=k;[...document.querySelectorAll("#flt button")].forEach(x=>x.className="");b.className="on";if(near){near=inNear();sel=null;draw();nearCard()}else draw()};
+document.getElementById("flt").appendChild(b)});
+// 내 위치
+document.getElementById("loc").onclick=()=>{
+const c=document.getElementById("card");
+if(!navigator.geolocation){c.textContent="이 기기에서는 위치 기능을 쓸 수 없어요.";return}
+c.textContent="위치 확인 중...";
+navigator.geolocation.getCurrentPosition(pos=>{
+const{latitude:la,longitude:lo,accuracy:ac}=pos.coords;
+me=gpsToMap(la,lo);meAcc=ac||0;
+if(me.x<MV.x-400||me.x>MV.x+MV.w+400||me.y<MV.y-400||me.y>MV.y+MV.h+400){near=null;draw();c.textContent="캠퍼스 밖에 계신 것 같아요. 핀을 눌러 위치를 확인해 보세요.";return}
+near=inNear();sel=null;draw();nearCard();
+{const w=document.getElementById("wrap"),f=ZW/MV.w;w.scrollTo({left:(me.x-MV.x)*f-w.clientWidth/2,top:(me.y-MV.y)*f-w.clientHeight/2,behavior:"smooth"})}
+},()=>{c.textContent="위치 권한이 거부되었어요. 지도에서 핀을 직접 눌러 확인해 주세요."},{enableHighAccuracy:true,timeout:10000})};
+// ---- 탭 / 건물별 ----
+const BC={"김수환관":"#d99a4e","안드레아관":"#e08c78","니콜스관":"#c4547a","다솔관":"#8a5a9a","소피아바라관":"#e2a0b4","미카엘관":"#7e57a8","중앙도서관":"#4f8f86","약학관":"#5c7bc4","성심관":"#c47a4a","콘서트홀":"#6a8a5a"};
+const LT={"김수환관":"K","니콜스관":"N","다솔관":"D","약학관":"NP","성심관":"SH","콘서트홀":"CH","안드레아관":"A","소피아바라관":"B","미카엘관":"T","중앙도서관":"L"};
+let bsel="김수환관";
+let curTab=1;
+function tab(n){curTab=n;["t1","t2","t3","t4"].forEach((t,i)=>{document.getElementById(t).hidden=i+1!==n});[...document.querySelectorAll("#nav button")].forEach((b,i)=>b.className=i+1===n?"on":"")}
+function stTxt(id){const s=stEff(id);return (s?stSp(s.v)+" ("+(s.n>1?s.n+"명 제보 · ":"")+ago(s.ts)+")":"최근 제보가 없어요")+(inColl()?" · 지금은 수거 시간대(9:00~10:30)라 상태가 바뀌었을 수 있어요":"")}
+function renderB(){
+const isBin=p=>p[1]==="G"||p[1]==="Q";
+document.getElementById("strip").innerHTML=BLD.map(b=>{const n=b[0],c=P.filter(p=>p[4]===n&&isBin(p)&&!OUT[p[0]]).length;
+return `<div class="bd${n===bsel?" on":""}" onclick="bsel='${n}';renderB()"><i>${LT[n]||n[0]}</i>${n==="중앙도서관"?"도서관":n}<small>${c}곳</small></div>`}).join("");
+const ix=P.map((p,i)=>i).filter(i=>P[i][4]===bsel),bins=ix.filter(i=>isBin(P[i])),KO=["G1","G2","Q1","Q2","G3","Q3","G4","Q4","G7","G6","Q5"],oth=ix.filter(i=>!isBin(P[i]));
+if(bsel==="김수환관"||bsel==="니콜스관")bins.sort((a,b)=>KO.indexOf(P[a][0])-KO.indexOf(P[b][0]));const av=bins.filter(i=>!OUT[P[i][0]]),g=av.filter(i=>P[i][1]==="G").length,q=av.length-g,hasD=oth.some(i=>P[i][1]==="D"),hasW=oth.some(i=>P[i][1]==="W");
+let h=`<div style="margin:4px 0"><b>${bsel}</b> · 반납함 ${av.length}곳</div><div>`+
+(g?`<span class="tag">${I("sq")}일반 ${g}</span>`:"")+(q?`<span class="tag">${I("star")}QR ${q}</span>`:"")+(hasD?`<span class="tag">${I("tri")}음료수거함</span>`:"")+(hasW?`<span class="tag">${I("circ")}세척기</span>`:"")+"</div>";
+h+=`<div class="tip" style="font-weight:700;color:${hasD?"#2e9e4f":"#e53935"}">이 건물에는 음료수거함이 ${hasD?"있어요":"없어요"}.</div>`;
+bins.forEach(i=>{const [id,k,x,y,b,n]=P[i];
+h+=`<div class="bc"><b style="display:flex;align-items:center;gap:8px"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#1c1f2b" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="flex:none">${k==="Q"?IC.Q:IC.G}</svg><span>${n||id}</span>${DH[id]?`<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="${NAVY}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex:none">${IC.D}</svg>`:""}${WH[id]?`<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="${NAVY}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex:none">${IC.W}</svg>`:""}</b>${k==="Q"&&!OUT[id]?qNote(id):`<div class="m" style="margin-top:4px">${OUT[id]?`<span style="color:#e53935;font-weight:700">${OUT[id]}</span>`:stTxt(id)}</div>${qNote(id)}`}
+<div class="st">${OUT[id]||k==="Q"?"":repBtn(id)+" "}<button onclick="tab(1);pick(${i},true)">${I("pin")}지도에서 보기</button></div>${OUT[id]||k==="Q"?"":repMsg(id)}</div>`});
+if(!bins.length)h+=`<div class="bc m">이 건물에는 등록된 반납함이 없어요.</div>`;
+
+document.getElementById("bdet").innerHTML=h}
+// ---- 시간표 추천 ----
+// 강의실 알파벳 → [건물명, 지도 x, y]. 위치를 모르면 null (값 수정 가능)
+const BX={K:["김수환관",230,1000],N:["니콜스관",555,840],D:["다솔관",555,640],V:["비르투스관",455,778],BA:["밤비노관",600,775],SH:["성심관",1495,340],B:["소피아바라관",805,676],NP:["약학관",1180,400],CH:["콘서트홀",1593,530],M:["마리아관",680,890],A:["안드레아관",515,968],T:["미카엘관",945,480],L:["중앙도서관",1140,478]};
+const DAYS=["월","화","수","목","금","토"];
+const tm=s=>{const m=/(\d{1,2}):(\d{2})/.exec(s||"");return m?+m[1]*60+ +m[2]:null};
+function recFor(A,B,gap){
+const mpu=metersPerUnit(),dAB=dist(A,B);
+return P.map((p,i)=>({p,i,k:p[1]})).filter(o=>(o.k==="G"||o.k==="Q")&&!OUT[o.p[0]]).map(o=>{
+const q={x:o.p[2],y:o.p[3]},t=dist(A,q)+dist(q,B),full=!!(stEff(o.p[0])&&stEff(o.p[0]).v==="full"),walk=t*mpu/70;
+return{...o,extra:(t-dAB)*mpu,walk,full,score:(t-dAB)*mpu+(full?200:0)+(walk>gap?300:0)}}).sort((a,b)=>a.score-b.score).slice(0,2)}
+let TT=[];try{TT=JSON.parse(localStorage.getItem("cutt")||"[]")}catch(e){}
+function saveTT(){if(DEMO)return;try{localStorage.setItem("cutt",JSON.stringify(TT))}catch(e){}}
+function addTT(){
+const g=id=>document.getElementById(id).value,room=g("fr").trim().toUpperCase().replace(/\s/g,""),s=g("fs"),e=g("fe"),m=document.getElementById("fmsg");
+if(!/^[A-Z]{1,2}\d{2,4}$/.test(room)){m.textContent="강의실을 N319처럼 입력해 주세요.";return}
+if(!s||!e||tm(e)<=tm(s)){m.textContent="시작·종료 시간을 확인해 주세요.";return}
+TT.push({day:g("fd"),start:s,end:e,room,name:g("fn").trim()||room});
+m.textContent="";document.getElementById("fr").value="";document.getElementById("fn").value="";saveTT();renderTT()}
+function delTT(i){TT.splice(i,1);saveTT();renderTT()}
+function renderTT(){
+const ord=TT.map((c,i)=>i).sort((a,b)=>DAYS.indexOf(TT[a].day)-DAYS.indexOf(TT[b].day)||tm(TT[a].start)-tm(TT[b].start));
+document.getElementById("tlist").innerHTML=ord.map(i=>{const c=TT[i];return `<div class="ti"><span>${c.day} ${c.start}~${c.end} · ${c.name===c.room?c.room:c.name+" ("+c.room+")"}</span><button onclick="delTT(${i})">삭제</button></div>`}).join("");
+analyzeTT()}
+function analyzeTT(){
+const msg=document.getElementById("tmsg"),out=document.getElementById("tres");out.innerHTML="";
+if(TT.length<2){msg.textContent=TT.length?"수업을 하나 더 추가하면 이동 구간 추천이 나와요.":"";return}
+const cls=TT.map(r=>{const m=/^([A-Z]{1,2})(\d{2,4})$/.exec(r.room);return{day:r.day,name:r.name,s:tm(r.start),e:tm(r.end),start:r.start,end:r.end,room:r.room,L:m?m[1]:null,fl:m?Math.floor(+m[2]/100):null}});
+let h="",n=0;const unk=new Set();
+DAYS.forEach(d=>{const L=cls.filter(c=>c.day===d).sort((a,b)=>a.s-b.s);let dh="";
+for(let j=0;j<L.length-1;j++){const a=L[j],b=L[j+1];if(!a.L||!b.L||b.s<a.e)continue;
+const X=BX[a.L],Y=BX[b.L];if(!X||!X[1]){unk.add(a.L);continue}if(!Y||!Y[1]){unk.add(b.L);continue}
+const A={x:X[1],y:X[2]},B={x:Y[1],y:Y[2]},gap=b.s-a.e,direct=Math.ceil(dist(A,B)*metersPerUnit()/70),rec=recFor(A,B,gap);n++;
+dh+=`<div class="bc"><b>${a.name} → ${b.name}</b><div class="m">${X[0]}${a.fl?" "+a.fl+"층":""} (${a.end} 종료) → ${Y[0]}${b.fl?" "+b.fl+"층":""} (${b.start} 시작)<br>쉬는 시간 ${gap}분 · 바로 이동 시 약 ${direct}분</div>`+
+rec.map((r,q)=>{const p=r.p,via=Math.ceil(r.walk);return `<div style="margin-top:8px">${q?I("alt")+"대안":I("chk")+"추천"} <b>${p[4]}${p[5]?" · "+p[5]:""}</b> <span class="m">${NAME[r.k]}</span><div class="m">돌아가는 거리 약 ${Math.round(r.extra)}m · 반납 경유 도보 약 ${via}분${via>gap?" · "+I("warn")+"시간이 빠듯해요":""}${r.full?" · 최근 '가득 참' 제보 있음":""}</div><button style="margin-top:4px" onclick="tab(1);pick(${r.i},true)">${I("pin")}지도에서 보기</button></div>`}).join("")+"</div>"}
+if(dh)h+=`<h3 style="font-size:15px;margin:14px 0 0">${d}요일</h3>`+dh});
+msg.textContent=n?`이동 구간 ${n}곳을 분석했어요.`:"연속된 수업이 없어서 추천할 구간이 없어요.";
+if(unk.size)msg.textContent+=` 위치를 모르는 건물(${[...unk].map(l=>BX[l]?BX[l][0]:l+"동").join(", ")})이 포함된 구간은 제외했어요.`;
+out.innerHTML=h}
+// ---- 제보 제한: 같은 반납함 30분에 한 번 (캐릭터 먹이는 하루 2번) ----
+const GROW_DAY=2,REP_GAP=30;
+let CHR={name:"컵이",count:0,last:0,bin:{},day:"",today:0,id:0,raised:[0],done:[],badge:false};
+try{CHR=Object.assign(CHR,JSON.parse(localStorage.getItem("cupchar")||"{}"))}catch(e){}
+if(!Array.isArray(CHR.raised)||!CHR.raised.length)CHR.raised=[0];if(!Array.isArray(CHR.done))CHR.done=[];if(typeof CHR.id!=="number"||CHR.id>3)CHR.id=0;if(!CHR.raised.includes(CHR.id))CHR.raised.push(CHR.id);
+function dk(){const d=new Date();return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()}
+function repGate(id){
+const now=Date.now();
+const left=Math.ceil((REP_GAP*60000-(now-(CHR.bin[id]||0)))/60000);
+if(left>0)return{ok:false,msg:`약 ${left}분 뒤에 다시 제보할 수 있어요`};
+return{ok:true}}
+function repBtn(id){const g=repGate(id);return g.ok?`<button class="on" onclick="openRep('${id}')">제보하기</button>`:`<button class="off" disabled>제보하기</button>`}
+function repMsg(id){const g=repGate(id);return g.ok?"":`<div class="m" style="margin-top:4px">${g.msg}</div>`}
+renderTT();
+renderB();
+draw();
+document.querySelectorAll("[data-ic]").forEach(e=>{e.innerHTML=I(e.dataset.ic)});
+(function(){const w=document.getElementById("wrap");w.scrollLeft=Math.max(0,(w.scrollWidth-w.clientWidth)/2);w.scrollTop=Math.max(0,(w.scrollHeight-w.clientHeight)/2)})();
+// ---- 제보 팝업 ----
+let rid=null,rv=null;
+function showRep(id){rid=id;rv=null;const p=P.find(q=>q[0]===id);
+document.getElementById("ssub").textContent=p[4]+(p[5]?" · "+p[5]:"")+" · "+NAME[p[1]];
+const O=[["ok","여유","컵을 넣을 자리가 충분해요"],["mid","보통","반쯤 찼지만 아직 넣을 수 있어요"],["full","가득 참","넘치거나 더 넣기 어려워요"]];
+document.getElementById("sopts").innerHTML=O.map(o=>`<button class="so" data-v="${o[0]}">${I(o[0])}<span>${o[1]}<br><span class="m" style="font-weight:400">${o[2]}</span></span></button>`).join("");
+document.querySelectorAll("#sopts .so").forEach(b=>b.onclick=()=>{rv=b.dataset.v;document.querySelectorAll("#sopts .so").forEach(x=>x.className="so"+(x===b?" on2":""));document.getElementById("sok").disabled=false});
+document.getElementById("sok").disabled=true;document.getElementById("sheet").hidden=false}
+const REP_R=70;
+function locDlg(t,sub,retry,id){document.getElementById("ltx").textContent=t;document.getElementById("lsb").textContent=sub||"";const r=document.getElementById("lre");r.hidden=!retry;r.onclick=()=>{document.getElementById("locd").hidden=true;openRep(id)};document.getElementById("locd").hidden=false}
+document.getElementById("lcx").onclick=document.getElementById("lbk").onclick=()=>{document.getElementById("locd").hidden=true};
+function openRep(id){const g=repGate(id);if(!g.ok){toast(g.msg);return}
+if(!navigator.geolocation){locDlg("이 기기에서는 위치를 확인할 수 없어서 제보할 수 없어요.","",false,id);return}
+toast("위치 확인 중...");
+navigator.geolocation.getCurrentPosition(pos=>{
+const p=P.find(q=>q[0]===id),m=gpsToMap(pos.coords.latitude,pos.coords.longitude),ac=Math.min(pos.coords.accuracy||0,50);
+const d=Math.hypot(m.x-p[2],m.y-p[3])*metersPerUnit();
+document.getElementById("toast").hidden=true;
+if(d-ac<=REP_R)showRep(id);
+else locDlg("이 반납함에서 너무 멀어요.","가까운 반납함만 제보할 수 있어요. 반납함 근처에서 다시 시도해 주세요.",true,id)
+},err=>{document.getElementById("toast").hidden=true;
+if(err&&err.code===1)locDlg("가까운 반납함만 제보할 수 있어요. 위치 권한을 허용해 주세요.","허용했는데도 안 되면 브라우저 설정에서 이 사이트의 위치 권한을 확인해 주세요.",true,id);
+else locDlg("위치를 확인하지 못했어요.","잠시 후 다시 시도해 주세요.",true,id)},{enableHighAccuracy:true,timeout:10000,maximumAge:20000})}
+function closeRep(){document.getElementById("sheet").hidden=true}
+function toast(t){const e=document.getElementById("toast");e.textContent=t;e.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>{e.hidden=true},2200)}
+document.getElementById("scx").onclick=closeRep;document.getElementById("sbk").onclick=closeRep;
+document.getElementById("sok").onclick=()=>{if(rid&&rv&&repGate(rid).ok){const fr=feed(rid);rep(rid,rv);closeRep();toast(FM[fr])}else closeRep()};
+// ---- GPS 좌표 변환 ----
+const byId=id=>document.getElementById(id);
+const DEFCAL={lat0:37.48630111458303,lng0:126.80150809245681,ar:-1.0652,ai:-2.4863,br:747.5,bi:-874.0};
+const cc=()=>DEFCAL;
+const ll2w=(la,lo,c)=>[(lo-c.lng0)*111320*Math.cos(c.lat0*Math.PI/180),(la-c.lat0)*110950];
+function gpsToMap(la,lo){const c=cc(),w=ll2w(la,lo,c);return{x:c.ar*w[0]-c.ai*w[1]+c.br,y:-(c.ai*w[0]+c.ar*w[1]+c.bi)}}
+// ---- 캐릭터 키우기 (도트) ----
+const PAL={o:"#2b3a7a",w:"#ffffff",s:"#cfdcf5",l:"#6f94ff",h:"#b9ceff",e:"#1e2433",c:"#ff9fb0",m:"#7a2e3b",y:"#ffd24a",b:"#9dbaff",f:"#6f94ff"};
+const TH=[0,2,4],MSG=["오늘도 반납 고마워요!","컵은 꼭 비우고 반납해요!","제보 덕분에 모두 편해져요."];
+const FM={ok:"제보 완료! 캐릭터에게 먹이를 줬어요.",grow:"제보 완료! 캐릭터가 성장했어요!",cap:"제보 완료!",full:"제보 완료! 캐릭터가 다 자랐어요. 새 친구를 만나 보세요!"};
+const chSave=()=>{if(DEMO)return;try{localStorage.setItem("cupchar",JSON.stringify(CHR))}catch(e){}};
+const stageOf=n=>n>=TH[2]?3:n>=TH[1]?2:1;
+const dayKey=()=>{const d=new Date();return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()};
+const escH=t=>String(t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function chGrid(st){
+const mo=["wwmmww","wwwwwwww"];
+const body=["owwwwwwwwo","owewwwwewo","oc"+mo[0]+"co","o"+mo[1]+"o","owwwwwwwwo","osswwwwsso","osssssso","oooooo"];
+if(st>=2){body[2]="b"+body[2]+"b";body[3]="b"+body[3]+"b"}
+const top=st===2?["oyyo"]:st===3?["y.yy.y","yyyyyy"]:[];
+return top.concat(["oooooooooooo","ollhhllllllo","oooooooooooo"],body,st>=2?["ff..ff","oo..oo"]:[])}
+const CHARS=[{n:"컵이",sn:["아기 컵","어린 컵","어른 컵"],p:PAL}].concat([{"n":"냥이","sn":["털뭉치","아기 고양이","고양이"],"g":[["................","................","................","................","................","................","................","................",".....oooooo.....","....occcccco....","...occcccccco...","..occcccccccco..","..odccecceccdo..","...ocbccccbco...","...oddccccddo...","....ooddddoo...."],["................","................","................","................","....o......o....","...oco....oco...","...opcoooocpo...","...occsssscco...","...occcssccco...","..occccccccccoo.","..ossccccccssoso","..occcecceccdoso","..obbccccccbboso","...odsccccsdocco","....oodssdoo.oo.","......oooo......"],["...o........o...","..oco......oco..","..opcoooooocpo..","..opccsccsccpo..","..occscsscscco..",".occcccccccccco.",".occcccccccccco.",".ocsehcccchesco.",".odceecccceecdo.",".obbccccccccbbo.","..ooccccccccoo..","...odrrrrrrdo...","..oddccyyccddo..","..oddcllllcddoo.","...odccllcccooco","....oddllddddddo"]],"p":{"c":"#8c7866","d":"#6d5c4e","s":"#4d4036","o":"#2a2420","e":"#2d2624","b":"#ff9fa0","p":"#ff9fb0","l":"#a8998a","w":"#efe8de","y":"#ffd24a","r":"#c0504a","h":"#ffffff"}},{"n":"양","sn":["마시멜로","아기 양","커다란 양"],"g":[["................","................","................","................","................","................",".....oooooo.....","....owwwwwwo....","...owwwwwwwwo...","..owwwWWWWwwwo..","..owwWWWWWWwso..","..oswWeWWeWwso..","...osbWmmWbso...","....onnnnnno....",".....oonnono....",".......oo.o....."],["................","................","................",".......oo.......",".....oowwoo.....","....owwwwwwo....","...owwwwwwwwo...","...owwwwwwwwo...","...owwwwwwwwo...","..owwffffffwwo..",".oFwwfEffEfwwFo.",".oFswfeffefwsFo.","..oowbfmmfbsoo..","...osnnnnnnso...","....oonnnnno....",".....okooko....."],["................",".......oo.......","....ooowwooo....","...owwwwwwwwo...","..oowwwwwwwwoo..",".owwwwwwswwwwwo.",".owwwwwsswwwwwo.",".owwwffffffwwwo.",".owwffffffffwwo.",".FFwfEffffEfwFF.",".FFwfeffffefwFF.",".owsbbfmmfbbswo.",".onnnnnnnnnnnno.","..oooqqqqqqoqqo.","...oLLooooLLqqo.","...oLLo..oLLoo.."]],"p":{"o":"#3b3550","w":"#ffffff","s":"#d3dbf2","f":"#fbe8d4","F":"#fbe8d4","e":"#2a2238","E":"#ffffff","b":"#ff9fb0","m":"#7a2e3b","k":"#3b3550","y":"#ffd24a","n":"#2f4a9b","r":"#ff7a90","g":"#7ec27a","h":"#ffffff","D":"#5b5470","R":"#ffc6d0","W":"#fffaf2","N":"#e9eefc","L":"#6b5a8a","q":"#27408a"}},{"n":"눈사람","sn":["눈덩이","2단 눈사람","눈사람"],"g":[["................","................","................","................","................","................","................","......oooo......","....oowwwsoo....","...owwwwwwwso...","...owwwwwwwso...","...owwewwewso...","..oowbwwwwbsoo..",".owwwwwwwwwwwso.","ossssswwwwssssso",".ooooossssooooo."],["................","................",".......oo.......",".....oowwoo.....","....owwwwwwo....","....owewwewo....","....obwwwwbo....",".o..owweewwo..o.","oko.oowwwsoo.oko",".okowwwwwwwsoko.","..okwwweewwwko..","..owwwwwwwwwso..","..oswwweewwwso..","...oswwwwwwso...","....osssssso....",".....oooooo....."],[".....oMMMMo.....","....omMmmmmo....","....omMmmmmo....","...oDDDDDDDDo...","...owwwwwwwwo...","...owwewwewwo...","...osbwwwwbso...",".oo.owweewso.oo.","okkorrrrrrrrokko",".okwrRrrRrrrwko.","..okwwwwwwrrko..",".oswwwweewrrwso.","..owwwwwwwRRso..","..oswwweewwwso..","...osswwwwsso...","....oossssoo...."]],"p":{"o":"#2b3150","w":"#ffffff","s":"#d3e0f5","S":"#b6c8ea","e":"#2b3150","b":"#ffb3c0","n":"#f08a3a","k":"#7a5a3a","h":"#3a4f9b","H":"#566bc0","t":"#9fd4ff","r":"#d9483f","y":"#ffd24a","g":"#5fae6a","Y":"#fff3b0","R":"#a8302b","m":"#8d97a8","M":"#c9d1de","D":"#5f6879"}}]);
+const chRows=(id,st)=>id===0?chGrid(st):CHARS[id].g[st-1];
+function chSvg(st,mood,id,size,cls,sil){
+const c=CHARS[id]||CHARS[0],pal=c.p,rows=chRows(CHARS[id]?id:0,st),t0=16-rows.length;let r="";
+rows.forEach((row,j)=>{const x0=Math.floor((16-row.length)/2);let i=0;while(i<row.length){const ch=row[i];if(ch==="."){i++;continue}let k=i;while(k<row.length&&row[k]===ch)k++;r+=`<rect x="${x0+i}" y="${t0+j}" width="${k-i}" height="1" fill="${pal[ch]||"#000"}"/>`;i=k}});
+return `<svg viewBox="0 0 16 16" shape-rendering="crispEdges" width="${size||208}" height="${size||208}" class="${cls===undefined?"cpx":cls}" style="display:block;margin:0 auto${sil?";filter:brightness(0)":""}">${r}</svg>`}
+const chPool=()=>CHARS.map((_,i)=>i).filter(i=>!CHR.raised.includes(i));
+const chDone=()=>CHR.count>=TH[2];
+const dogamOpen=()=>CHR.done.length>0||(CHR.id===0&&chDone());
+const chAlert=()=>!!CHR.badge||(chDone()&&chPool().length>0);
+function chBadge(){const b=document.querySelector("#nav button:nth-child(4)");if(!b)return;let e=b.querySelector(".bdg");if(chAlert()){if(!e){e=document.createElement("span");e.className="bdg";e.textContent="!";b.appendChild(e)}}else if(e)e.remove()}
+function feed(id){
+const now=Date.now(),day=dk();if(CHR.day!==day){CHR.day=day;CHR.today=0}
+CHR.bin[id]=now;let r="ok";
+if(CHR.count>=TH[2])r="full";
+else if(CHR.today>=GROW_DAY)r="cap";
+else{const prev=stageOf(CHR.count);CHR.count++;CHR.today++;CHR.last=now;if(CHR.count>=TH[2]){r="full";CHR.badge=true}else if(stageOf(CHR.count)>prev){r="grow";CHR.badge=true}}
+chSave();chRender();return r}
+let dogam=false,dgSel=null;
+const chReach=i=>CHR.done.includes(i)?3:i===CHR.id?stageOf(CHR.count):CHR.raised.includes(i)?1:0;
+function meetNew(){
+if(!chDone())return;const pool=chPool();if(!pool.length)return;
+const nid=pool[Math.floor(Math.random()*pool.length)];
+if(!CHR.done.includes(CHR.id))CHR.done.push(CHR.id);
+CHR.id=nid;CHR.raised.push(nid);CHR.name=CHARS[nid].n;CHR.count=0;CHR.badge=false;chSave();chRender();revealNew(nid)}
+function revealNew(nid){
+const rv=document.createElement("div");rv.id="rv";
+rv.innerHTML=`<div class="rvb"><div class="rvt" id="rvt">누군가 다가오고 있어요...</div><div class="rvs" id="rvs">${chSvg(1,"ok",nid,176,"",true)}</div><div class="rvn" id="rvn"></div></div>`;
+document.body.appendChild(rv);
+setTimeout(()=>{byId("rvt").textContent="두근두근..."},900);
+setTimeout(()=>{rv.classList.add("flash");byId("rvs").innerHTML=chSvg(1,"ok",nid,176,"");byId("rvs").className="rvs pop";byId("rvt").textContent="새로운 캐릭터가 찾아왔어요!";byId("rvn").innerHTML=`<b>${escH(CHARS[nid].n)}</b><div class="m">${escH(CHARS[nid].sn[0])}부터 함께 키워요</div><button class="on" id="rvok" style="margin-top:14px;border-radius:12px;padding:12px 22px;font-size:15px">좋아요</button>`;byId("rvok").onclick=()=>rv.remove()},2600)}
+function chRender(){
+if(!byId("t4").hidden&&CHR.badge){CHR.badge=false;chSave()}
+const id=CHR.id,C=CHARS[id],n=CHR.count,st=stageOf(n),today=CHR.day===dk()?CHR.today:0,done=n>=TH[2];
+const nx=done?null:TH[st],pv=TH[st-1]||0,pct=done?100:Math.round((n-pv)/(nx-pv)*100);
+if(dogam&&dogamOpen()){
+const seen=CHR.raised,have=CHARS.filter((_,i)=>seen.includes(i)).length;
+if(dgSel!==null){const i=dgSel,C2=CHARS[i],rc=chReach(i);
+byId("t4").innerHTML=`<div class="bc"><div style="display:flex;justify-content:space-between;align-items:center"><span class="dgt" id="dgb" role="button" tabindex="0" aria-label="뒤로"><i><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></i>${rc?escH(C2.n):"???"}</span><span class="m">${rc} / 3단계</span></div><div class="dg3">${[1,2,3].map(s=>{const ok=s<=rc;return `<div class="dc${ok?"":" lk"}">${chSvg(s,"ok",i,84,"",!ok)}<div class="dn">${ok?escH(C2.sn[s-1]):"???"}</div></div>`}).join("")}</div></div>`;
+byId("dgb").onclick=()=>{dgSel=null;chRender()};chBadge();return}
+byId("t4").innerHTML=`<div class="bc"><div style="display:flex;justify-content:space-between;align-items:center"><span class="dgt" id="dgb" role="button" tabindex="0" aria-label="뒤로"><i><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></i>캐릭터 도감</span><span class="m">${have} / ${CHARS.length}</span></div><div class="dg">${CHARS.map((c,i)=>{const rc=chReach(i);return `<button class="dc${rc?"":" lk"}" data-i="${i}" aria-label="${rc?escH(c.n):"???"}">${chSvg(rc||3,"ok",i,84,"",!rc)}<div class="dn">${rc?escH(c.n):"???"}</div></button>`}).join("")}</div></div>`;
+byId("dgb").onclick=()=>{dogam=false;chRender()};
+document.querySelectorAll(".dc[data-i]").forEach(b=>b.onclick=()=>{dgSel=+b.dataset.i;chRender()});chBadge();return}
+dogam=false;dgSel=null;
+const pool=chPool(),ico='<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5M9 7h6"/></svg>';
+const act=done?(pool.length?'<button class="on meet" id="gacha">새 친구 만나기</button>':'<div class="m" style="margin-top:8px">모든 캐릭터를 만났어요!</div>'):"";
+byId("t4").innerHTML=`<div class="bc" style="text-align:center;position:relative"><button id="dgo" aria-label="도감" ${dogamOpen()?"":"disabled"} style="position:absolute;top:8px;right:8px;border:0;background:var(--sp);color:var(--pri);border-radius:12px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;${dogamOpen()?"":"opacity:.35"}">${ico}</button>${chSvg(st,"ok",id)}<div style="position:relative;width:9em;margin:6px auto;font-size:20px"><input id="chn" class="cname" maxlength="8" value="${escH(CHR.name)}" aria-label="이름" style="width:100%;margin:0;padding:4px;box-sizing:border-box"></div><div class="m">${escH(C.sn[st-1])} · 먹은 횟수 ${n}번</div><div class="cbar"><i style="width:${pct}%"></i></div><div class="m">${done?"다 자랐어요!":"다음 성장까지 "+(nx-n)+"번"}</div>${act}</div><div class="bc"><div style="display:flex;justify-content:space-between;align-items:center"><b>오늘 먹이</b><span>${Array.from({length:GROW_DAY},(_,i)=>`<i class="dot${i<today?" on":""}"></i>`).join("")}</span></div><div class="m" style="margin-top:6px">${today>=GROW_DAY?"오늘은 배불러요. 내일 또 만나요!":"제보하면 먹이를 줄 수 있어요."}</div></div>`;
+byId("chn").onchange=e=>{CHR.name=e.target.value.trim().slice(0,8)||C.n;chSave()};
+byId("dgo").onclick=()=>{if(dogamOpen()){dogam=true;chRender()}};
+if(byId("gacha"))byId("gacha").onclick=meetNew;
+chBadge()}
+{const _t=tab;tab=n=>{_t(n);if(n===4){dogam=false;if(CHR.badge){CHR.badge=false;chSave()}chRender()}}}
+chRender();
+// ---- 줌 (핀치 / 버튼 / ctrl+휠) ----
+let ZW=875;
+function setZoom(nw,cx,cy){const w=document.getElementById("wrap");nw=Math.min(3000,Math.max(420,nw));const r=nw/ZW,x=(w.scrollLeft+cx)*r-cx,y=(w.scrollTop+cy)*r-cy;ZW=nw;document.getElementById("map").style.width=nw+"px";w.scrollLeft=x;w.scrollTop=y}
+(function(){const w=document.getElementById("wrap");
+const ctr=()=>({x:w.clientWidth/2,y:w.clientHeight/2});
+document.getElementById("zi").onclick=()=>{const c=ctr();setZoom(ZW*1.35,c.x,c.y)};
+document.getElementById("zo").onclick=()=>{const c=ctr();setZoom(ZW/1.35,c.x,c.y)};
+let ld=0;const dst=t=>Math.hypot(t[0].clientX-t[1].clientX,t[0].clientY-t[1].clientY);
+w.addEventListener("touchstart",e=>{if(e.touches.length===2)ld=dst(e.touches)},{passive:true});
+w.addEventListener("touchmove",e=>{if(e.touches.length===2){e.preventDefault();const d=dst(e.touches),r=w.getBoundingClientRect(),cx=(e.touches[0].clientX+e.touches[1].clientX)/2-r.left,cy=(e.touches[0].clientY+e.touches[1].clientY)/2-r.top;if(ld)setZoom(ZW*d/ld,cx,cy);ld=d}},{passive:false});
+w.addEventListener("touchend",()=>{ld=0});
+w.addEventListener("wheel",e=>{if(e.ctrlKey){e.preventDefault();const r=w.getBoundingClientRect();setZoom(ZW*(e.deltaY<0?1.1:1/1.1),e.clientX-r.left,e.clientY-r.top)}},{passive:false});
+})();
+
+// ---- 이용 안내 (예시 화면으로 보여줌) ----
+const gi=id=>P.findIndex(p=>p[0]===id);
+let SNAP=null;
+function dCenter(x,y){const w=byId("wrap"),f=ZW/MV.w;w.scrollLeft=(x-MV.x)*f-w.clientWidth/2;w.scrollTop=(y-MV.y)*f-w.clientHeight/2}
+function dFilt(k){if(filt===k)return;const b=document.querySelectorAll("#flt button")[["ALL","G","Q","W","D"].indexOf(k)];if(b)b.click()}
+function dMap(){dFilt("ALL");me=null;near=null;sel=null;draw();byId("card").innerHTML='<span class="m">지도의 핀을 눌러 보세요.</span>';dCenter(380,1180)}
+function dNear(){dFilt("ALL");me={x:645,y:1050};meAcc=20;NR=50;near=inNear();sel=null;draw();nearCard();dCenter(me.x,me.y)}
+function dPick(){dFilt("ALL");me=null;near=null;pick(gi("G2"),false);dCenter(360,1200)}
+function demoOn(){if(DEMO)return;const w=byId("wrap");
+SNAP={sel,filt,me,ST:JSON.stringify(ST),near,NR,meAcc,bsel,TT:JSON.stringify(TT),CHR:JSON.stringify(CHR),dogam,dgSel,curTab,zw:ZW,sl:w.scrollLeft,st:w.scrollTop,py:scrollY};
+DEMO=true;
+const now=Date.now(),ts=Math.min(now,Math.max(now-6e5,collCut(now)+1e3));
+ST={G1:{v:"ok",ts},G2:{v:"full",ts},G3:{v:"mid",ts},G6:{v:"full",ts},G7:{v:"mid",ts},G8:{v:"ok",ts},G9:{v:"mid",ts},G10:{v:"full",ts}};
+TT=[{day:"월",start:"09:00",end:"09:50",room:"N319",name:"인공지능"},{day:"월",start:"10:00",end:"10:50",room:"K301",name:"글쓰기"},{day:"수",start:"13:00",end:"13:50",room:"D204",name:"통계학"},{day:"수",start:"14:00",end:"14:50",room:"L201",name:"독서토론"}];
+CHR=Object.assign({},CHR,{name:"컵이",count:3,last:now,bin:{},day:dk(),today:1,id:0,raised:[0,1],done:[1],badge:false});
+dogam=false;dgSel=null;bsel="김수환관";setZoom(875,w.clientWidth/2,w.clientHeight/2);
+draw();renderB();renderTT();chRender()}
+function demoOff(){if(!DEMO)return;const o=SNAP;DEMO=false;
+ST=JSON.parse(o.ST);TT=JSON.parse(o.TT);CHR=Object.assign({name:"컵이",count:0,last:0,bin:{},day:"",today:0,id:0,raised:[0],done:[],badge:false},JSON.parse(o.CHR));
+bsel=o.bsel;dogam=o.dogam;dgSel=o.dgSel;sel=o.sel;me=o.me;near=o.near;NR=o.NR;meAcc=o.meAcc;
+if(filt!==o.filt)dFilt(o.filt);
+const w=byId("wrap");setZoom(o.zw,0,0);w.scrollLeft=o.sl;w.scrollTop=o.st;
+tab(o.curTab);draw();if(near)nearCard();else if(sel!==null)pick(sel,false);else byId("card").innerHTML='<span class="m">지도의 핀을 눌러 보세요.</span>';
+renderB();renderTT();chRender();scrollTo(0,o.py);SNAP=null}
+function dChar(n){if(CHR.count!==n){CHR.count=n;chRender()}}
+function dUnion(a,b){const rr=()=>{const x=a.getBoundingClientRect(),y=b.getBoundingClientRect(),l=Math.min(x.left,y.left),t=Math.min(x.top,y.top),r=Math.max(x.right,y.right),bt=Math.max(x.bottom,y.bottom);return{left:l,top:t,right:r,bottom:bt,width:r-l,height:bt-t}};return{getClientRects:()=>[1],getBoundingClientRect:rr,scrollIntoView:o=>a.scrollIntoView(o)}}
+const dCardG2=()=>[...document.querySelectorAll("#bdet .bc")].find(c=>c.textContent.includes("카페멘사 앞"));
+const tIc=(p,c,w)=>`<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-4px">${p}</svg>`;
+const tGray=I("sq").replace(/(<circle[^>]*?) fill="[^"]*"/,'$1 fill="'+STC.none+'"');
+const tCup=I("sq").replace(/(<circle[^>]*?) fill="[^"]*"/,'$1 class="cyc"');
+const tG=tIc(IC.G,"#1c1f2b",1.9),tQ=tIc(IC.Q,"#1c1f2b",1.9),tD=tIc(IC.D,NAVY,2.2),tW=tIc(IC.W,NAVY,2.2);
+const BCARD=n=>()=>document.querySelectorAll("#bdet .bc")[n];
+const TOUR=[
+{t:1,pre:dMap,s:"#wrap",x:`지도는 손가락으로 끌어서 이동할 수 있어요. 확대•축소는 두 손가락이나 <span class="zbi"><svg viewBox="0 0 24 24" fill="none" stroke="#1e2433" stroke-width="2.4" stroke-linecap="round"><path d="M7 12h10M12 7v10"/></svg></span><span class="zbi"><svg viewBox="0 0 24 24" fill="none" stroke="#1e2433" stroke-width="2.4" stroke-linecap="round"><path d="M7 12h10"/></svg></span> 버튼으로 조절할 수 있어요.`},
+{t:1,pre:dMap,s:"#t1 .lg",x:`${tCup} 핀은 일반 반납함, ${I("star")} 핀은 QR 반납함이에요. 핀 모서리에 ${I("drop")}이 달려 있으면 근처에 음료수거함이 있다는 뜻이고, ${I("circ")} 핀은 텀블러 세척기예요.`},
+{t:1,pre:dMap,s:"#t1 .lg",x:`일반 반납함 핀의 색은 학생들이 제보한 가장 최근 상태예요. ${tGray} 핀은 아직 제보가 없다는 뜻이에요. ${I("star")} 핀은 제보 없이 항상 파란색으로 표시돼요.`},
+{t:1,pre:()=>{dMap();dFilt("D");dCenter(500,1000)},s:"#flt",x:"보고 싶은 종류만 골라 볼 수 있어요. 선택한 종류에 해당하는 핀만 지도에 남아요."},
+{t:1,pre:dMap,s:"#loc",x:"현재 위치에서 가까운 반납함을 모아 볼 수 있어요. 위치 사용을 허용해야 이 기능을 쓸 수 있어요."},
+{t:1,pre:dNear,s:"#wrap",x:"검색 범위가 점선 원으로 표시돼요. 실내에서는 GPS 오차가 커서 위치가 조금 어긋날 수 있어요."},
+{t:1,pre:dNear,s:"#card",x:"원하는 검색 범위를 선택할 수 있고, 가까운 순서대로 목록에 표시돼요. 항목을 누르면 지도에서 그 핀이 선택돼요."},
+{t:1,pre:dPick,s:"#card",x:"선택한 핀의 정보를 확인할 수 있어요. 일반 반납함이 가득 찼다면 근처 QR 반납함을 이용하라는 안내가 뜨고, 지도에서 파란 링이 표시돼요."},
+{t:1,pre:dPick,s:"#card .st button",x:`${stSp("ok")}, ${stSp("mid")}, ${stSp("full")} 중에서 현재 상태를 골라 제보할 수 있어요. 같은 반납함에는 30분 뒤에 다시 제보할 수 있어요.`},
+{t:1,pre:dPick,s:"#card",x:"제보는 시간이 지나면 사라져요. 매일 오전 10:30에 수거가 끝나면, 그 이전에 올라온 제보도 모두 사라져요."},
+{t:2,s:"#strip",x:"건물을 누르면 해당 건물 내부와 근처에 있는 반납함을 볼 수 있어요."},
+{t:2,s:()=>{const e=document.querySelector("#bdet .tag"),t=document.querySelector("#bdet .tip");return e&&t?dUnion(e.parentElement,t):null},x:"선택한 건물의 반납함 종류와 개수를 알려줘요. 음료수거함과 텀블러 세척기 여부도 알 수 있어요."},
+{t:2,s:()=>{const a=dCardG2(),q=[...document.querySelectorAll("#bdet .bc")].find(c=>c.textContent.includes("카페멘사 안"));return a&&q?dUnion(a,q):a},x:`반납함마다 카드가 하나씩 있어요. 위치 앞 <span style="white-space:nowrap">${tG}은</span> 일반 반납함, <span style="white-space:nowrap">${tQ}은</span> QR 반납함이에요. <span style="white-space:nowrap">${tD}은</span> 근처에 음료수거함이, <span style="white-space:nowrap">${tW}는</span> 근처에 텀블러 세척기가 있다는 표시예요.`},
+{t:2,s:()=>{const a=dCardG2(),q=[...document.querySelectorAll("#bdet .bc")].find(c=>c.textContent.includes("카페멘사 안"));return a&&q?dUnion(a,q):a},x:"반납함별 최근 제보 상태와 시각을 확인할 수 있어요. 일반 반납함이 가득 찼다면 근처 QR 반납함을 이용하라고 안내해요."},
+{t:2,s:()=>{const c=dCardG2();return c&&c.querySelectorAll("button")[0]},x:`${stSp("ok")}, ${stSp("mid")}, ${stSp("full")} 중에서 현재 상태를 골라 제보할 수 있어요. 같은 반납함에는 30분 뒤에 다시 제보할 수 있어요.`},
+{t:2,s:()=>{const c=dCardG2();return c&&c.querySelectorAll("button")[1]},x:"지도 탭에서 이 반납함의 위치를 확인할 수 있어요."},
+{t:3,s:"#t3 .fr",x:"수업이 있는 요일과 시작·종료 시간을 골라요. 시간표는 반납함을 들르기 좋은 이동 구간을 찾는 데 쓰여요."},
+{t:3,s:"#fr",x:"강의실은 건물 알파벳과 숫자로 입력해요. 예를 들어 N319는 니콜스관 3층이에요. K는 김수환관, N은 니콜스관, D는 다솔관, A는 안드레아관, B는 소피아바라관, T는 미카엘관, L은 중앙도서관이에요. 과목명은 적지 않아도 돼요."},
+{t:3,s:"#tadd",x:"수업 추가를 누르면 아래 목록에 쌓여요. 수업이 두 개 이상 모이면 연속된 수업 사이의 이동 구간을 분석해서 추천해 줘요."},
+{t:3,s:"#tlist",x:"추가한 수업 목록이에요. 잘못 넣었다면 삭제 버튼으로 지울 수 있어요. 입력한 시간표는 이 기기에만 저장되고 다른 사람에게 보이지 않아요. 지금 보이는 수업은 예시예요."},
+{t:3,s:()=>document.querySelector("#tres .bc"),x:"연속된 두 수업 사이에 들르기 좋은 반납함을 추천해 줘요. 바로 이동할 때와 비교해 얼마나 돌아가는지, 쉬는 시간 안에 다녀올 수 있는지도 알려줘요. 가득 찬 반납함은 추천 순위가 내려가요."},
+{t:4,s:"#t4 .bc",x:"반납함 상태를 제보할 때마다 캐릭터가 먹이를 먹고 자라요. 컵이는 3단계까지 자라고, 다 자라면 새로운 친구를 만날 수 있어요."},
+{t:4,pre:()=>dChar(3),s:()=>byId("chn").parentElement,x:"눌러서 원하는 이름으로 바꿀 수 있어요. 이름은 여덟 글자까지 쓸 수 있어요."},
+{t:4,pre:()=>dChar(3),s:()=>{const a=document.querySelector("#t4 .cbar"),b=a&&a.nextElementSibling;return a&&b?dUnion(a,b):null},x:"다음 단계까지 얼마나 남았는지 보여줘요. 먹이는 하루에 두 번까지만 줄 수 있어요."},
+{t:4,pre:()=>dChar(3),s:"#dgo",x:"도감에서 캐릭터를 모아 볼 수 있어요. 도감 기능은 컵이가 3단계까지 성장하면 열려요."},
+{t:4,pre:()=>dChar(4),s:"#gacha",x:"캐릭터를 다 키우면 새 친구를 만날 수 있어요."}];
+const TFIN={s:"#help",x:"설명을 다시 보고 싶으면 언제든 여기를 눌러요."};
+let TS=[],TI=0,TAUTO=false;
+const tVis=e=>e&&e.getClientRects().length>0;
+const tEl=x=>typeof x.s==="function"?x.s():document.querySelector(x.s);
+function tourStart(all){tMark(curTab);demoOn();TS=(all===true?TOUR.filter(x=>x.t!==3):TOUR.filter(x=>x.t===curTab)).concat([TFIN]);TI=0;byId("tour").hidden=false;tourShow(true)}
+function tourClose(){byId("tour").hidden=true;demoOff()}
+function tourShow(first){
+const x=TS[TI],tip=byId("ttip"),sp=byId("tspot"),ttx=byId("ttx");
+if(x.t&&curTab!==x.t)tab(x.t);
+if(x.pre)x.pre();
+const el=tEl(x);
+if(!tVis(el)){if(TI<TS.length-1){TI++;return tourShow(first)}return tourClose()}
+el.scrollIntoView({block:"center"});
+const r=el.getBoundingClientRect(),pd=6,vw=innerWidth,vh=innerHeight;
+if(first){sp.style.transition=tip.style.transition="none"}
+sp.style.top=r.top-pd+"px";sp.style.left=r.left-pd+"px";sp.style.width=r.width+pd*2+"px";sp.style.height=r.height+pd*2+"px";
+const place=()=>{const tw=tip.offsetWidth,th=tip.offsetHeight;let l=Math.min(Math.max(12,r.left+r.width/2-tw/2),vw-tw-12);let t=r.bottom+pd+12;if(t+th>vh-12){const u=r.top-pd-12-th;t=u>=12?u:Math.max(12,vh-th-12)}tip.style.left=l+"px";tip.style.top=t+"px"};
+const setTx=()=>{ttx.innerHTML=x.x;byId("tcn").textContent=(TI+1)+" / "+TS.length;byId("tpv").hidden=TI===0;byId("tnx").textContent=TI===TS.length-1?"끝":"다음"};
+if(first){setTx();place();void tip.offsetWidth;sp.style.transition=tip.style.transition=""}
+else{ttx.style.opacity=0;setTimeout(()=>{setTx();place();ttx.style.opacity=1},140)}}
+byId("tnx").onclick=()=>{if(TI>=TS.length-1)tourClose();else{TI++;tourShow(false)}};
+byId("tpv").onclick=()=>{if(TI>0){TI--;tourShow(false)}};
+byId("tcl").onclick=tourClose;
+addEventListener("resize",()=>{if(!byId("tour").hidden)tourShow(true)});
+addEventListener("keydown",e=>{if(e.key==="Escape"&&!byId("tour").hidden)tourClose()});
+byId("help").onclick=()=>tourStart(false);
+const tSeen=()=>{try{const o=JSON.parse(localStorage.getItem("cuptour")||"{}");return o&&typeof o==="object"?o:{}}catch(e){return{}}};
+const tMark=n=>{const o=tSeen();o[n]=1;try{localStorage.setItem("cuptour",JSON.stringify(o))}catch(e){}};
+function autoTour(n,d){if(tSeen()[n])return;setTimeout(()=>{if(curTab===n&&byId("tour").hidden&&!tSeen()[n])tourStart(false)},d)}
+{const _t2=tab;tab=n=>{_t2(n);autoTour(n,350)}}
+autoTour(1,700);
+
+// ---- Firebase (제보 공유) : 설정값을 넣으면 켜지고, null이면 지금처럼 이 기기에만 저장 ----
+const FIREBASE_CONFIG={apiKey:"AIzaSyBIg0j9_7S-s-ZDJkYPUntz-cdX2ILiEek",authDomain:"cup-return-map.firebaseapp.com",projectId:"cup-return-map",storageBucket:"cup-return-map.firebasestorage.app",messagingSenderId:"668689782670",appId:"1:668689782670:web:18f744703be6cd953e36df"};
+const fbLoad=u=>new Promise((ok,ko)=>{const e=document.createElement("script");e.src=u;e.onload=ok;e.onerror=ko;document.head.appendChild(e)});
+function fbRep(id,v){
+FB.db.collection("reports").doc(FB.uid+"_"+id).set({bin:id,v,uid:FB.uid,ts:firebase.firestore.FieldValue.serverTimestamp()}).catch(()=>toast("제보를 저장하지 못했어요. 잠시 뒤에 다시 시도해 주세요."))}
+async function fbInit(){
+if(!FIREBASE_CONFIG)return;
+try{const b="https://www.gstatic.com/firebasejs/10.12.2/";
+await fbLoad(b+"firebase-app-compat.js");await Promise.all([fbLoad(b+"firebase-auth-compat.js"),fbLoad(b+"firebase-firestore-compat.js")]);
+firebase.initializeApp(FIREBASE_CONFIG);
+const cr=await firebase.auth().signInAnonymously();FB.uid=cr.user.uid;FB.db=firebase.firestore();
+FB.db.collection("reports").where("ts",">",new Date(collCut(Date.now()))).onSnapshot(sn=>{
+const m={};sn.forEach(d=>{const x=d.data(),t=x.ts&&x.ts.toMillis?x.ts.toMillis():Date.now();(m[x.bin]=m[x.bin]||[]).push({v:x.v,ts:t,uid:x.uid})});
+FBR=m;FB.on=true;if(!DEMO)refreshAll()},()=>{FB.on=false})}catch(e){FB.on=false}}
+fbInit();
+</script></body></html>
+</body></html>
